@@ -7,7 +7,7 @@ import React,{Component} from 'react';
             this.state ={
                 name:"牛逼",
                 niHome:{
-                    names:"你真是俗爱"
+                    names:"你真是俗爱2423"
                 }
             }
         }
