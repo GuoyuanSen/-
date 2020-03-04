@@ -1,26 +1,73 @@
 import React,{Component} from 'react';
+import {Link } from "react-router-dom";
+const axios = require('axios')
      class Home extends Component{
 
         constructor(props){
             super(props)
 
             this.state ={
-                name:"牛逼",
-                niHome:{
-                    names:"你真是俗爱2423"
-                }
+                domain:'http://a.itying.com/',
+                list:[]
             }
         }
+        requestData=()=>{
 
-        render(){
-            return(
-                <div>
-                    <h2> 你好</h2>   
-                   <h2 title={this.state.name}> 你sdfsdf好---{this.state.name}</h2>   
-                   <h1> 你好啊---{this.state.niHome.names}</h1>   
-                   <h1 style={{"color":"red"}}> 你好啊---行内样式</h1>   
-                </div>
-                ) 
+            var api=this.state.domain+'api/productlist';
+    
+            axios.get(api)
+            .then((response)=>{         
+                 console.log(response);
+    
+                this.setState({
+    
+                    list:response.data.result
+                })
+            })
+            .catch(function (error) {         
+              console.log(error);
+            })
+            
         }
-     }
+        componentDidMount(){
+            this.requestData()
+        }
+        render(){
+            return (
+                <div className="home">
+                    <div className="list">
+                      {
+                         this.state.list.map((value,key)=>{
+                             return(
+                                <div className="item" key={key}>
+                                 <h3 className="item_cate">{value.title}</h3>
+                                    <ul className="item_list">
+                                      {
+                                             value.list.map((v,k)=>{
+                                        return(
+                                             <li key={k}> 
+                                             <Link to={`/pcontent/${v._id}`}>
+                                                 <div className="inner">
+                                                     <img src={`${this.state.domain}${v.img_url}`} />
+                                                       <p className="title">{v.title}</p>						
+                                                        <p className="price">{v.price}元</p>
+                                                  </div>
+                                                  </Link>		
+                                                  </li> 
+                                              )
+                                            })
+                                         }
+                                    </ul>                            
+                                </div>
+                              )
+                            })
+                         }
+    
+                           
+                        </div>
+    
+                </div>
+            );
+        }
+  }
 export default Home

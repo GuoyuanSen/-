@@ -1,19 +1,28 @@
-import React from 'react';
-import './assets/css/App.css';
+import React, { Component } from 'react';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Home from './components/Home';
-import News from './components/News';
-function App() {
-  return (
-    <div className="App">
+ import Pcontent from './components/Pcontent';
 
-        你好 根组件
-       <Home></Home>
-       <hr/>
-       <News></News>
-    </div>
-  );
+import './assets/css/index.css'
+
+class App extends Component {
+
+  render() {
+    return (
+
+      <Router>
+        <div>
+             
+          <Route exact path="/" component={Home} />
+          <Route path="/pcontent/:id" component={Pcontent} />
+         
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
+
